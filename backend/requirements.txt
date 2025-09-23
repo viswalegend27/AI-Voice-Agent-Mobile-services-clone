@@ -1,0 +1,34 @@
+# Required packages
+livekit-agents[google]>=1.2.0
+livekit-agents
+livekit-plugins-google
+livekit-plugins-deepgram
+livekit-plugins-noise-cancellation~=0.2
+livekit-plugins-silero
+livekit
+livekit-api
+# Google packages
+google-generativeai
+google-genai>=1.0.0
+google-api-core
+faster-whisper
+# Flask requirements
+flask
+flask-websockets
+flask[async]
+flask-cors
+uvicorn
+python-dotenv
+langchain-community
+duckduckgo-search
+# Python based requirements
+requests
+pyaudio
+soundfile
+numpy
+scipy
+pyttsx3
+speechrecognition
+# TTS and STT
+livekit-plugins-deepgram
+livekit-plugins-cartesia
