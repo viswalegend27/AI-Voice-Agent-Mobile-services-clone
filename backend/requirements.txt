@@ -32,3 +32,8 @@ speechrecognition
 # TTS and STT
 livekit-plugins-deepgram
 livekit-plugins-cartesia
+# Django and other imports
+Django
+channels
+daphne
+uvicorn

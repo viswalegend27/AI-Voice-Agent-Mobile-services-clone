@@ -13,5 +13,7 @@ INSTRUCTIONS = """
 """
 
 WELCOME_MESSAGE = """
-  Begin by welcoming the user to our Iphone service center and ask them to provide the model of their Iphone if they don't know ask them about which year the phone model was released.
+  Begin by welcoming the user to our Iphone service center and ask them of their ticket number,
+  or else guide them provide them about some basic information about Iphone service 
+  Wait for the user to provide their ticket number
 """

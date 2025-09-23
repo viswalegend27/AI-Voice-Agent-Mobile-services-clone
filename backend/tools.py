@@ -15,7 +15,6 @@ from livekit.agents import function_tool, RunContext
 
 @function_tool()
 async def get_weather(context: RunContext, city: str) -> str:
-    """Get the current weather for a given city."""
     url = f"https://wttr.in/{city}?format=3"
     try:
         response = requests.get(url, timeout=5)
@@ -169,32 +168,43 @@ async def create_ticket(context: RunContext,
                         customer_name: str,
                         contact: str,
                         issue_description: str) -> str:
-    # Basic validation: ensure none are empty or just whitespace
-    missing = []
-    if not serial or not str(serial).strip():
-        missing.append("serial")
-    if not model or not str(model).strip():
-        missing.append("model")
-    if not customer_name or not str(customer_name).strip():
-        missing.append("customer_name")
-    if not contact or not str(contact).strip():
-        missing.append("contact")
-    if not issue_description or not str(issue_description).strip():
-        missing.append("issue_description")
+    """
+    Create a service ticket. Returns a user-facing status string.
+    Validation: ensures no field is empty or whitespace-only.
+    DB work runs in a thread to avoid blocking the event loop.
+    """
+    # normalize & validate inputs
+    def _norm(val: Optional[str]) -> str:
+        return (val or "").strip()
 
+    fields = {
+        "serial": _norm(serial),
+        "model": _norm(model),
+        "customer_name": _norm(customer_name),
+        "contact": _norm(contact),
+        "issue_description": _norm(issue_description),
+    }
+
+    missing = [name for name, val in fields.items() if not val]
     if missing:
-        # Tell the agent (and therefore the user) what is missing and let it prompt.
         return f"Missing required fields for creating a ticket: {', '.join(missing)}. Please provide them before I create the ticket."
 
     try:
-        ticket = await asyncio.to_thread(_db.create_ticket, serial, model, customer_name, contact, issue_description)
-        logging.info(f"Created ticket {ticket.serial} for {ticket.customer_name}")
+        ticket = await asyncio.to_thread(
+            _db.create_ticket,
+            fields["serial"],
+            fields["model"],
+            fields["customer_name"],
+            fields["contact"],
+            fields["issue_description"],
+        )
+        logging.info("Created ticket %s for %s", ticket.serial, ticket.customer_name)
         return f"Ticket created: {ticket.serial} — {ticket.model} — status: {ticket.status}"
     except sqlite3.IntegrityError:
-        logging.warning("Attempt to create duplicate serial: %s", serial)
-        return f"A ticket with serial '{serial}' already exists."
-    except Exception as e:
-        logging.exception("Failed to create ticket: %s", e)
+        logging.warning("Attempt to create duplicate serial: %s", fields["serial"])
+        return f"A ticket with serial '{fields['serial']}' already exists."
+    except Exception:
+        logging.exception("Failed to create ticket due to an unexpected error")
         return "Failed to create ticket due to an internal error."
     
 @function_tool()
