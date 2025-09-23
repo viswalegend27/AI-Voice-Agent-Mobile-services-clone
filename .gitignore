@@ -1,0 +1,11 @@
+# Folders and files inside backend folder
+/backend/.env
+/backend/chatai
+/backend/KMS
+/backend/__pycache__/
+/backend/*.sqlite
+# General pycache
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
