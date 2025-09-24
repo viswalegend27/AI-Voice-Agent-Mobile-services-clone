@@ -28,10 +28,6 @@ async def get_weather(context: RunContext, city: str) -> str:
 
 @function_tool()
 async def get_datetime(context: "RunContext", query: str = "full") -> str:
-    """
-    Get a human-like response for current date and time.
-    query options: 'time', 'date', 'day', 'full'
-    """
     try:
         now = datetime.now()
         hour_24 = now.hour
@@ -168,11 +164,6 @@ async def create_ticket(context: RunContext,
                         customer_name: str,
                         contact: str,
                         issue_description: str) -> str:
-    """
-    Create a service ticket. Returns a user-facing status string.
-    Validation: ensures no field is empty or whitespace-only.
-    DB work runs in a thread to avoid blocking the event loop.
-    """
     # normalize & validate inputs
     def _norm(val: Optional[str]) -> str:
         return (val or "").strip()

@@ -9,3 +9,6 @@
 *.pyo
 *.pyd
 __pycache__/
+# Folders and files inside frontend folder
+/frontend/.env
+/frontend/node_modules
