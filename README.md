@@ -30,9 +30,9 @@ This project is an **experimental Apple Voice Assistant clone** with a **Python 
 ```bash
 git clone https://github.com/your-username/apple-voice-assistant.git
 cd apple-voice-assistant
-
-2. Backend Setup
-
+```
+### 2. Backend Setup
+```
 cd backend
 python -m venv venv
 source venv/bin/activate   # Mac/Linux
@@ -50,9 +50,9 @@ LIVEKIT_URL=your_livekit_url
 Run the backend agent:
 
 python agent.py
-
-3. Frontend Setup
-
+```
+### 3. Frontend Setup
+```
 cd frontend
 npm install
 npm run dev
@@ -77,3 +77,4 @@ You can generate a LiveKit token from your LiveKit dashboard for testing.
     Extend backend logic inside chatai/ or KMS/.
 
     Frontend requires both a LiveKit URL (.env) and a LiveKit token (model.jsx).
+```
