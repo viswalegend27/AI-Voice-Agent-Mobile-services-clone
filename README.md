@@ -77,8 +77,3 @@ You can generate a LiveKit token from your LiveKit dashboard for testing.
     Extend backend logic inside chatai/ or KMS/.
 
     Frontend requires both a LiveKit URL (.env) and a LiveKit token (model.jsx).
-
-
----
-
-Boss, do you want me to also add a **quick start workflow** section (like: “Start backend → Start frontend → Open browser → Connect to LiveKit room”)?
